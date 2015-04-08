@@ -1,0 +1,11 @@
+.enb/tmp
+node_modules/
+npm-debug.log
+pages/*/*.*
+!pages/*/*.bemdecl.js
+tests/client/*
+!tests/client/index.html
+!tests/client/mocha.js
+!tests/client/mocha.css
+!tests/client/chai.js
+!tests/client/sinon.js

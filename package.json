@@ -1,0 +1,46 @@
+{
+  "description": "Project stub for BEM projects",
+  "private": true,
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "dependencies": {
+    "debug": "^2.1.3",
+    "express": "4.10.3",
+    "recluster": "^0.4.0",
+    "vow": "^0.4.9",
+    "vow-fs": "^0.3.4"
+  },
+  "devDependencies": {
+    "bem-components": "bem/bem-components#v2.1.0",
+    "bem-core": "bem/bem-core#v2.6.0",
+    "chai": "^2.2.0",
+    "enb": "^0.15.0",
+    "enb-bem-techs": "^1.0.4",
+    "enb-bembundle": "^1.1.0",
+    "enb-bh": "^0.4.1",
+    "enb-borschik": "^1.5.0",
+    "enb-diverse-js": "^0.1.0",
+    "enb-modules": "^0.1.0",
+    "enb-priv-js": "^2.1.0",
+    "enb-stylus": "^1.2.3",
+    "enb-y-i18n": "^1.0.1",
+    "git-hooks": "~0.0.10",
+    "jscs": "^1.12.0",
+    "jshint": "^2.6.3",
+    "mocha": "^2.2.4",
+    "mocha-phantomjs": "^3.5.3",
+    "sinon": "^1.14.1",
+    "supervisor": "^0.6.0"
+  },
+  "scripts": {
+    "start": "DEBUG={{ProjectName}}:* PORT=8080 supervisor -w server,configs -- server/boot.js",
+    "test": "npm run test-client && npm run test-server",
+    "validate": "npm run lint && npm test",
+    "build": "enb make",
+    "lint": "jshint . && jscs .",
+    "test-client": "enb make tests/client -n && mocha-phantomjs tests/client/index.html",
+    "test-server": "mocha -R spec --recursive tests/server",
+    "clean": "enb make clean"
+  }
+}
