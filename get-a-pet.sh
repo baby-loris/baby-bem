@@ -16,7 +16,7 @@ cd $ProjectName
 find . -type f | xargs perl -pi -e "s/{{ProjectName}}/${ProjectName}/g"
 
 # Remove auxiliary files
-rm -rf .git *.sh baby-loris.png
+rm -rf .git *.sh bem.png
 
 # Init new git repository
 git init
