@@ -57,6 +57,13 @@ tests/server        Server tests
 ```
 
 ## How to develop?
+## Remove demo data
+Remove demo level from file system.
+```
+rm -rf client/demo
+```
+and from `.enb/make.js`.
+
 ### Build project and run enb server
 ```
 npm start
