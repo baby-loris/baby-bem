@@ -57,7 +57,7 @@ tests/server        Server tests
 ```
 
 ## How to develop?
-## Remove demo data
+### Remove demo data
 Remove demo level from file system.
 ```
 rm -rf client/demo
