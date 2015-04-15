@@ -35,12 +35,12 @@
   },
   "scripts": {
     "start": "DEBUG={{ProjectName}}:* PORT=8080 supervisor -w server,configs -- server/boot.js",
-    "test": "npm run test-client && npm run test-server",
     "validate": "npm run lint && npm test",
-    "build": "enb make",
     "lint": "jshint . && jscs .",
+    "test": "npm run test-client && npm run test-server",
     "test-client": "enb make tests/client -n && mocha-phantomjs tests/client/index.html",
     "test-server": "mocha -R spec --recursive tests/server",
+    "build": "enb make",
     "clean": "enb make clean"
   }
 }
