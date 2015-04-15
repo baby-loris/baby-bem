@@ -81,7 +81,7 @@ npm run test-client
 ```
 or run `npm start`, then open in your [favorite browser](http://browser.yandex.com/):
 ```
-/tests/client/index.html
+http://localhost:8080/tests/client/index.html
 ```
 
 Server-side tests:
