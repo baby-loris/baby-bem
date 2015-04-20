@@ -1,5 +1,4 @@
 module.exports = function (bh) {
-
     bh.match('splash', function (ctx) {
         ctx.content([
             {

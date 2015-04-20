@@ -21,6 +21,12 @@ module.exports = function (data) {
                             size: 'xl',
                             visible: true
                         }
+                    },
+                    {
+                        block: 'config',
+                        // WARNING! It's only an example of the client config
+                        // Don't proxy all server data to the client side!
+                        data: data
                     }
                 ]
             }

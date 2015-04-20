@@ -7,6 +7,7 @@
                 size: 'xl',
                 visible: true
             }
-        }
+        },
+        'config'
     ]
 });
