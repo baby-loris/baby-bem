@@ -18,7 +18,7 @@
     "overrides": {
         "client/**/**.js": {
             "browser": true,
-            "predef": ["modules"],
+            "predef": ["modules", "JSON"],
             "es3": true
         },
 
