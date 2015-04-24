@@ -3,7 +3,6 @@ var vow = require('vow');
 var assets = require('../../configs/current/assets.js');
 var hosts = require('../../configs/current/hosts.js');
 
-var DEFAULT_LANG = 'en';
 var PAGES_DIRECTORY = 'pages';
 
 /**
@@ -14,7 +13,7 @@ var PAGES_DIRECTORY = 'pages';
  */
 module.exports = function (pageName) {
     return function (req, res, next) {
-        var lang = DEFAULT_LANG;
+        var lang = req.i18n.lang;
         var pagePath = path.join(PAGES_DIRECTORY, pageName);
         var getBemJson = require('../lib/bemjson-provider/' + pageName);
 

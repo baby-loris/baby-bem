@@ -7,6 +7,7 @@ var env = require('../configs/current/env');
 
 var assetsMiddleware = require('../configs/current/assets').middleware();
 var buildPageMiddleware = require('./middlewares/build-page');
+var langMiddleware = require('./middlewares/lang-detector');
 var notFoundMiddleware = require('./middlewares/404');
 var errorMiddleware = require('./middlewares/error');
 
@@ -17,6 +18,7 @@ app
         res.end();
     })
     .use(assetsMiddleware)
+    .use(langMiddleware)
     .get('/', buildPageMiddleware('index'))
     .use(notFoundMiddleware)
     .use(errorMiddleware);

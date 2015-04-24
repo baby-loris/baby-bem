@@ -1,13 +1,7 @@
-module.exports = function (config) {
-    var browserSupport = [
-        'IE >= 9',
-        'Safari >= 5',
-        'Chrome >= 33',
-        'Opera >= 12.16',
-        'Firefox >= 28'
-    ];
+var projectConfig = require('../configs/project');
 
-    config.setLanguages(['en']);
+module.exports = function (config) {
+    config.setLanguages(projectConfig.i18n.langs);
 
     function getLevels() {
         return [
@@ -29,7 +23,9 @@ module.exports = function (config) {
             [require('enb/techs/file-provider'), {target: '?.bemdecl.js'}],
             [require('enb-bem-techs/techs/levels'), {levels: getLevels()}],
             [require('enb-modules/techs/deps-with-modules')],
-            [require('enb-stylus/techs/css-stylus-with-autoprefixer'), {autoprefixerArguments: browserSupport}],
+            [require('enb-stylus/techs/css-stylus-with-autoprefixer'), {
+                autoprefixerArguments: projectConfig.supportedBrowsers
+            }],
             [require('enb-diverse-js/techs/browser-js'), {target: '?.pre.js'}],
             [require('enb-bh/techs/bh-server'), {jsAttrName: 'data-bem', jsAttrScheme: 'json'}],
             [require('enb-bh/techs/bh-client-module'), {target: '?.client.bh.js'}],
