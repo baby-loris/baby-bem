@@ -28,7 +28,11 @@ module.exports = function (config) {
             }],
             [require('enb-diverse-js/techs/browser-js'), {target: '?.pre.js'}],
             [require('enb-bh/techs/bh-server'), {jsAttrName: 'data-bem', jsAttrScheme: 'json'}],
-            [require('enb-bh/techs/bh-client-module'), {target: '?.client.bh.js'}],
+            [require('enb-bh/techs/bh-client-module'), {
+                jsAttrName: 'data-bem',
+                jsAttrScheme: 'json',
+                target: '?.client.bh.js'
+            }],
             [require('enb-priv-js/techs/pub-js-i18n'), {
                 target: '?.pre.{lang}.js',
                 jsTarget: '?.pre.js',
@@ -70,11 +74,15 @@ module.exports = function (config) {
             [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: 'all'}],
             [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: '{lang}'}],
             [require('enb-diverse-js/techs/browser-js'), {target: '?.source.js'}],
-            [require('enb-bh/techs/bh-client-module'), {target: '?.bh.client.js'}],
+            [require('enb-bh/techs/bh-client-module'), {
+                jsAttrName: 'data-bem',
+                jsAttrScheme: 'json',
+                target: '?.client.bh.js'
+            }],
             [require('enb-priv-js/techs/pub-js-i18n'), {
                 target: '?.pre.js',
                 jsTarget: '?.source.js',
-                bemhtmlTarget: '?.bh.client.js',
+                bemhtmlTarget: '?.client.bh.js',
                 lang: config.getLanguages()[0]
             }],
             [require('enb-modules/techs/prepend-modules'), {source: '?.pre.js', target: '?.js'}],
