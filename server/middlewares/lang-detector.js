@@ -1,4 +1,4 @@
-var projectConfig = require('../../configs/project.js');
+var config = require('../config');
 
 /**
  * Simple middleware to detect interface language.
@@ -6,7 +6,7 @@ var projectConfig = require('../../configs/project.js');
  * the first supported language as a fallback.
  */
 module.exports = function (req, res, next) {
-    var supportedLangs = projectConfig.i18n.langs;
+    var supportedLangs = config.i18n.langs;
     var lang = req.query.lang;
 
     req.i18n = {
