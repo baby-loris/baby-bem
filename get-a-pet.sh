@@ -9,7 +9,7 @@ read UserProjectName
 
 ProjectName=${UserProjectName:-baby-bem}
 
-git clone git://github.yandex-team.ru/hevil/baby-bem.git $ProjectName
+git clone git://github.com/baby-loris/baby-bem.git $ProjectName
 cd $ProjectName
 
 # Replace placeholders with real data
