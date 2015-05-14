@@ -14,7 +14,7 @@ module.exports = {
      * @param {String} assetPath
      * @returns {Module} module
      */
-    requirePageAsset: function (assetPath) {
+    require: function (assetPath) {
         var modulePath = path.join('..', '..', assetPath);
         return require(modulePath);
     }

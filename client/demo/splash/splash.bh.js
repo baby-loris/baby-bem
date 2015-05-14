@@ -13,7 +13,7 @@ module.exports = function (bh) {
                     type: 'link',
                     view: 'action'
                 },
-                url: 'https://github.yandex-team.ru/hevil/baby-bem/blob/master/README.md',
+                url: 'https://github.com/baby-loris/baby-bem/blob/master/README.md',
                 text: bh.lib.i18n('splash', 'read-more')
             }
         ]);
