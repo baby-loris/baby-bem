@@ -1,15 +1,24 @@
+var debug = require('debug')('{{ProjectName}}:boot');
+var extend = require('extend');
 var fs = require('fs');
 var path = require('path');
 var recluster = require('recluster');
 
-var debug = require('debug')('{{ProjectName}}:boot');
-var env = require('../configs/current/env');
+var argv = require('./argv');
+var config = require('./config');
 
-try {
-    fs.unlinkSync(env.socket);
-} catch (error) {}
+var socket = argv.socket || config.socket;
+if (!Number(socket) && fs.existsSync(socket)) {
+    fs.unlinkSync(socket);
+}
 
-var cluster = recluster(path.join(__dirname, 'app.js'), env.cluster);
+var cluster = recluster(
+    path.join(__dirname, 'app.js'),
+    extend(
+        {args: process.argv.slice(2)},
+        config.cluster
+    )
+);
 cluster.run();
 
 /**

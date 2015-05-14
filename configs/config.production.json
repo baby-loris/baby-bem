@@ -1,0 +1,24 @@
+{
+    "socket": "/tmp/yandex-maps-ui-{{ProjectName}}.socket",
+
+    "cluster": {
+        "workers": 2,
+        "timeout": 60
+    },
+
+    "hosts": {
+        "static": "/"
+    },
+
+    "i18n": {
+        "langs": ["en", "ru"]
+    },
+
+    "supportedBrowsers": [
+        "IE >= 9",
+        "Safari >= 5",
+        "Chrome >= 33",
+        "Opera >= 12.16",
+        "Firefox >= 28"
+    ]
+}

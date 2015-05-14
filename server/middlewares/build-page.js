@@ -1,7 +1,6 @@
 var path = require('path');
 var vow = require('vow');
-var assets = require('../../configs/current/assets.js');
-var hosts = require('../../configs/current/hosts.js');
+var config = require('../config');
 
 var PAGES_DIRECTORY = 'pages';
 
@@ -18,8 +17,8 @@ module.exports = function (pageName) {
         var getBemJson = require('../lib/bemjson-provider/' + pageName);
 
         vow.all([
-            assets.require(buildAssetPath(pagePath, 'bh')),
-            assets.require(buildAssetPath(pagePath, 'lang.' + lang))
+            requireAsset(buildAssetPath(pagePath, 'bh')),
+            requireAsset(buildAssetPath(pagePath, 'lang.' + lang))
         ]).spread(function (bh, buildI18n) {
             var i18n = buildI18n();
             var data = getCommonData(pagePath, i18n);
@@ -43,10 +42,32 @@ function getCommonData(pagePath, i18n) {
     var pageName = path.basename(pagePath);
 
     return {
-        assetsPath: hosts.static + pagePath + '/_' + pageName,
+        assetsPath: config.hosts.static + pagePath + '/_' + pageName,
         i18n: {
             lang: i18n.getLanguage()
         }
+    };
+}
+
+/**
+ * @param {String} assetPath
+ * @returns {Module} module
+ */
+var requireAsset = function (assetPath) {
+    var modulePath = path.join('..', '..', assetPath);
+    return require(modulePath);
+};
+
+if (config.devAssetServer) {
+    var enbServerMiddleware = require('enb/lib/server/server-middleware');
+    var dropRequireCache = require('enb/lib/fs/drop-require-cache');
+    var enbBuilder = enbServerMiddleware.createBuilder();
+
+    requireAsset = function (assetPath) {
+        return enbBuilder(assetPath).then(function (fileName) {
+            dropRequireCache(require, fileName);
+            return require(fileName);
+        });
     };
 }
 
