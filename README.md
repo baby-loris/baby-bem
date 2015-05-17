@@ -9,7 +9,7 @@ In this project you can see example of using our tools and approaches.
 
 ## Quick start
 ```
-curl https://github.yandex-team.ru/hevil/baby-bem/raw/master/install.sh | sh
+curl https://raw.githubusercontent.com/baby-loris/baby-bem/master/install.sh | sh
 cd <YOUR_PROJECT_NAME>
 npm install
 npm start
