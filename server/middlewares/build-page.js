@@ -53,10 +53,7 @@ function getCommonData(pagePath, i18n) {
  * @param {String} assetPath
  * @returns {Module} module
  */
-var requireAsset = function (assetPath) {
-    var modulePath = path.join('..', '..', assetPath);
-    return require(modulePath);
-};
+var requireAsset;
 
 if (config.devAssetServer) {
     var enbServerMiddleware = require('enb/lib/server/server-middleware');
@@ -68,6 +65,11 @@ if (config.devAssetServer) {
             dropRequireCache(require, fileName);
             return require(fileName);
         });
+    };
+} else {
+    requireAsset = function (assetPath) {
+        var modulePath = path.join('..', '..', assetPath);
+        return require(modulePath);
     };
 }
 
