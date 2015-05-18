@@ -7,26 +7,11 @@ var config = require('./config');
 
 var app = express();
 
+var assetsMiddleware = require('./middlewares/assets');
 var buildPageMiddleware = require('./middlewares/build-page');
+var errorMiddleware = require('./middlewares/error');
 var langMiddleware = require('./middlewares/lang-detector');
 var notFoundMiddleware = require('./middlewares/404');
-var errorMiddleware = require('./middlewares/error');
-
-var assetsMiddleware = function (req, res, next) {
-    return next();
-};
-
-if (config.devAssetServer) {
-    var enbServerMiddleware = require('enb/lib/server/server-middleware');
-
-    console.log(enbServerMiddleware);
-
-    assetsMiddleware = express.Router()
-        .use(enbServerMiddleware.createMiddleware())
-        .use('/client', express.static(__dirname + '/../../client'))
-        .use('/node_modules', express.static(__dirname + '/../../node_modules'))
-        .use('/tests/client', express.static(__dirname + '/../../tests/client'));
-}
 
 app
     .enable('trust proxy')
