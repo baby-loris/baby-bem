@@ -95,4 +95,4 @@ npm test
 ```
 
 ## Contribution
-See [Contribution guide](CONTRIBUTION.md) for more information.
+  * [Codestyle](https://github.com/yandex/codestyle/blob/master/javascript.md)
