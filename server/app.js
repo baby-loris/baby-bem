@@ -1,11 +1,9 @@
-var fs = require('fs');
 var express = require('express');
 var debug = require('debug')('{{ProjectName}}:app');
 
 var app = express();
-var env = require('../configs/current/env');
 
-var assetsMiddleware = require('../configs/current/assets').middleware();
+var assetsMiddleware = require('./middlewares/assets');
 var buildPageMiddleware = require('./middlewares/build-page');
 var langMiddleware = require('./middlewares/lang-detector');
 var notFoundMiddleware = require('./middlewares/404');
@@ -23,10 +21,7 @@ app
     .use(notFoundMiddleware)
     .use(errorMiddleware);
 
-var portOrSocket = env.port || env.socket;
-app.listen(portOrSocket, function () {
-    debug('Listening on %s', portOrSocket);
-    if (env.socket && !env.port) {
-        fs.chmod(env.socket, '0777');
-    }
+var socket = process.env.SOCKET;
+app.listen(socket, function () {
+    debug('Listening on %s', socket);
 });

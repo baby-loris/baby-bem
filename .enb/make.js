@@ -1,7 +1,5 @@
-var projectConfig = require('../configs/project');
-
 module.exports = function (config) {
-    config.setLanguages(projectConfig.i18n.langs);
+    config.setLanguages(['en', 'ru']);
 
     function getLevels() {
         return [
@@ -24,7 +22,13 @@ module.exports = function (config) {
             [require('enb-bem-techs/techs/levels'), {levels: getLevels()}],
             [require('enb-modules/techs/deps-with-modules')],
             [require('enb-stylus/techs/css-stylus-with-autoprefixer'), {
-                autoprefixerArguments: projectConfig.supportedBrowsers
+                autoprefixerArguments: [
+                    'IE >= 9',
+                    'Safari >= 5',
+                    'Chrome >= 33',
+                    'Opera >= 12.16',
+                    'Firefox >= 28'
+                ]
             }],
             [require('enb-diverse-js/techs/browser-js'), {target: '?.pre.js'}],
             [require('enb-bh/techs/bh-server'), {jsAttrName: 'data-bem', jsAttrScheme: 'json'}],

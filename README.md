@@ -12,12 +12,14 @@ In this project you can see example of using our tools and approaches.
 curl https://raw.githubusercontent.com/baby-loris/baby-bem/master/install.sh | sh
 cd <YOUR_PROJECT_NAME>
 npm install
-npm start
+SOCKET=8080 npm start
 ```
 Then open the link in your [favorite browser](http://browser.yandex.com/):
 ```
 http://localhost:8080/
 ```
+
+**Note.** The application uses socket `/tmp/{{dirname}}-{{username}}.socket` by default. Don't forget set up your nginx config properly.
 
 ## What's inside?
 
@@ -67,6 +69,10 @@ and from `.enb/make.js`.
 ### Build project and run enb server
 ```
 npm start
+```
+Use `SOCKET` environment variable to change default SOCKET. For example, to run on port `8080` you should
+```
+SOCKET=8080 npm start
 ```
 
 ### Static code analyser and codestyle checking
