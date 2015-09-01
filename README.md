@@ -9,7 +9,7 @@ In this project you can see example of using our tools and approaches.
 
 ## Quick start
 ```
-curl https://raw.githubusercontent.com/baby-loris/baby-bem/master/install.sh | sh
+bash <(curl -s https://raw.githubusercontent.com/baby-loris/baby-bem/master/get-a-pet.sh)
 cd <YOUR_PROJECT_NAME>
 npm install
 SOCKET=8080 npm start
