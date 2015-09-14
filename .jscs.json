@@ -6,6 +6,7 @@
         ".enb/tmp/**",
         ".git/**",
         "pages/**",
-        "tests/client/**"
+        "tests/client/**",
+        "libs/**"
     ]
 }

@@ -12,6 +12,7 @@ In this project you can see example of using our tools and approaches.
 bash <(curl -s https://raw.githubusercontent.com/baby-loris/baby-bem/master/get-a-pet.sh)
 cd <YOUR_PROJECT_NAME>
 npm install
+npm run deps
 SOCKET=8080 npm start
 ```
 Then open the link in your [favorite browser](http://browser.yandex.com/):
@@ -85,7 +86,7 @@ Client-side tests:
 ```
 npm run test-client
 ```
-or run `npm start`, then open in your [favorite browser](http://browser.yandex.com/):
+or run `enb server`, then open in your [favorite browser](http://browser.yandex.com/):
 ```
 http://localhost:8080/tests/client/index.html
 ```

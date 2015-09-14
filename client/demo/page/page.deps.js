@@ -1,5 +1,5 @@
 ({
     shouldDeps: [
-        'boot'
+        'app'
     ]
 });

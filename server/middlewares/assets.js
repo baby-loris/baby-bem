@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === 'development') {
     module.exports = express.Router()
         .use(enbServerMiddleware.createMiddleware({noLog: true}))
         .use('/client', express.static(__dirname + '/../../client'))
-        .use('/node_modules', express.static(__dirname + '/../../node_modules'))
+        .use('/libs', express.static(__dirname + '/../../libs'))
         .use('/tests/client', express.static(__dirname + '/../../tests/client'));
 } else {
     // if you want to serve static files by express application,

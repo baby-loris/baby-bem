@@ -10,7 +10,7 @@
             }
         },
         {
-            block: 'i18n',
+            block: 'translations',
             mods: {
                 keyset: 'splash'
             }
