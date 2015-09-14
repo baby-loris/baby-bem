@@ -1,100 +1,131 @@
+var enbBemTechs = require('enb-bem-techs');
+var techs = {
+    fileProvider: require('enb/techs/file-provider'),
+    depsWithModules: require('enb-modules/techs/deps-with-modules'),
+    stylus: require('enb-stylus/techs/stylus'),
+    browserJs: require('enb-diverse-js/techs/browser-js'),
+    bhCommonJs: require('enb-bh/techs/bh-commonjs'),
+    bhBundle: require('enb-bh/techs/bh-bundle'),
+    pubJsI18n: require('enb-priv-js/techs/pub-js-i18n'),
+    prependModules: require('enb-modules/techs/prepend-modules'),
+    mergeKeysets: require('enb/techs/i18n-merge-keysets'),
+    yi18n: require('enb-y-i18n/techs/y-i18n-lang-js'),
+    fileCopy: require('enb/techs/file-copy'),
+    borschik: require('enb-borschik/techs/borschik'),
+    bemdeclTest: require('enb/techs/bemdecl-test'),
+    jsTests: require('enb/techs/js-test')
+};
+var bhOptions = {
+    jsAttrName: 'data-bem',
+    jsAttrScheme: 'json'
+};
+
+function getLevels() {
+    return [
+        {path: 'libs/bem-core/common.blocks', check: false},
+        {path: 'libs/bem-core/desktop.blocks', check: false},
+        {path: 'libs/bem-components/common.blocks', check: false},
+        {path: 'libs/bem-components/desktop.blocks', check: false},
+        {path: 'libs/bem-components/design/common.blocks', check: false},
+        {path: 'libs/bem-components/design/desktop.blocks', check: false},
+        'client/common',
+        'client/demo'
+    ];
+}
+
 module.exports = function (config) {
     config.setLanguages(['en', 'ru']);
-
-    function getLevels() {
-        return [
-            'node_modules/bem-core/common.blocks',
-            'node_modules/bem-core/desktop.blocks',
-            'node_modules/bem-components/common.blocks',
-            'node_modules/bem-components/desktop.blocks',
-            'node_modules/bem-components/design/common.blocks',
-            'node_modules/bem-components/design/desktop.blocks',
-            'client/common',
-            'client/demo'
-        ].map(config.resolvePath.bind(config));
-    }
 
     config.nodes('pages/*');
     config.nodeMask(/pages\/.*/, function (nodeConfig) {
         nodeConfig.addTechs([
-            [require('enb-bem-techs/techs/files')],
-            [require('enb/techs/file-provider'), {target: '?.bemdecl.js'}],
-            [require('enb-bem-techs/techs/levels'), {levels: getLevels()}],
-            [require('enb-modules/techs/deps-with-modules')],
-            [require('enb-stylus/techs/css-stylus-with-autoprefixer'), {
-                autoprefixerArguments: [
-                    'IE >= 9',
-                    'Safari >= 5',
-                    'Chrome >= 33',
-                    'Opera >= 12.16',
-                    'Firefox >= 28'
-                ]
+            [enbBemTechs.files],
+            [techs.fileProvider, {target: '?.bemdecl.js'}],
+            [enbBemTechs.levels, {levels: getLevels()}],
+            [techs.depsWithModules],
+            [techs.stylus, {
+                target: '?.dev.css',
+                autoprefixer: {
+                    browsers: [
+                        'IE >= 9', 'Safari >= 5', 'Chrome >= 33', 'Opera >= 12.1', 'Firefox >= 28'
+                    ]
+                }
             }],
-            [require('enb-diverse-js/techs/browser-js'), {target: '?.pre.js'}],
-            [require('enb-bh/techs/bh-server'), {jsAttrName: 'data-bem', jsAttrScheme: 'json'}],
-            [require('enb-bh/techs/bh-client-module'), {
-                jsAttrName: 'data-bem',
-                jsAttrScheme: 'json',
+            [techs.browserJs, {target: '?.pre.js'}],
+            [techs.bhCommonJs, {
+                bhOptions: bhOptions,
+                mimic: 'BEMHTML'
+            }],
+            [techs.bhBundle, {
+                bhOptions: bhOptions,
+                requires: {i18n: {ym: 'y-i18n'}},
                 target: '?.client.bh.js'
             }],
-            [require('enb-priv-js/techs/pub-js-i18n'), {
+            [techs.pubJsI18n, {
                 target: '?.pre.{lang}.js',
                 jsTarget: '?.pre.js',
                 bemhtmlTarget: '?.client.bh.js',
                 lang: '{lang}'
             }],
-            [require('enb-modules/techs/prepend-modules'), {source: '?.pre.{lang}.js', target: '?.{lang}.js'}],
-            [require('enb/techs/i18n-merge-keysets'), {lang: 'all'}],
-            [require('enb/techs/i18n-merge-keysets'), {lang: '{lang}'}],
-            [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: 'all'}],
-            [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: '{lang}'}]
+            [techs.prependModules, {source: '?.pre.{lang}.js', target: '?.dev.{lang}.js'}],
+            [techs.mergeKeysets, {lang: 'all'}],
+            [techs.mergeKeysets, {lang: '{lang}'}],
+            [techs.yi18n, {lang: 'all'}],
+            [techs.yi18n, {lang: '{lang}'}]
         ]);
-        nodeConfig.addTargets(['_?.{lang}.js', '_?.css']);
+        nodeConfig.addTargets(['?.{lang}.js', '?.css']);
 
         nodeConfig.mode('development', function (nodeConfig) {
             nodeConfig.addTechs([
-                [require('enb/techs/file-copy'), {sourceTarget: '?.{lang}.js', destTarget: '_?.{lang}.js'}],
-                [require('enb/techs/file-copy'), {sourceTarget: '?.css', destTarget: '_?.css'}]
+                [techs.fileCopy, {sourceTarget: '?.dev.{lang}.js', destTarget: '?.{lang}.js'}],
+                [techs.fileCopy, {sourceTarget: '?.dev.css', destTarget: '?.css'}]
            ]);
         });
 
         nodeConfig.mode('production', function (nodeConfig) {
             nodeConfig.addTechs([
-                [require('enb-borschik/techs/borschik'), {sourceTarget: '?.{lang}.js', destTarget: '_?.{lang}.js'}],
-                [require('enb-borschik/techs/borschik'), {sourceTarget: '?.css', destTarget: '_?.css', freeze: 'yes'}]
+                [techs.borschik, {sourceTarget: '?.dev.{lang}.js', destTarget: '?.{lang}.js'}],
+                [techs.borschik, {sourceTarget: '?.dev.css', destTarget: '?.css'}]
            ]);
         });
     });
 
     config.node('tests/client', function (nodeConfig) {
         nodeConfig.addTechs([
-            [require('enb-bem-techs/techs/files')],
-            [require('enb-bem-techs/techs/levels'), {levels: getLevels()}],
-            [require('enb/techs/bemdecl-test'), {target: 'client.bemdecl.js'}],
-            [require('enb/techs/js-test')],
-            [require('enb-modules/techs/deps-with-modules')],
-            [require('enb/techs/i18n-merge-keysets'), {lang: 'all'}],
-            [require('enb/techs/i18n-merge-keysets'), {lang: 'ru'}],
-            [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: 'all'}],
-            [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: '{lang}'}],
-            [require('enb-diverse-js/techs/browser-js'), {target: '?.source.js'}],
-            [require('enb-bh/techs/bh-client-module'), {
-                jsAttrName: 'data-bem',
-                jsAttrScheme: 'json',
+            [enbBemTechs.files],
+            [enbBemTechs.levels, {levels: getLevels()}],
+            [enbBemTechs.levels, {
+                levels: ['client/common', 'client/demo'],
+                target: '?.test.levels'
+            }],
+            [techs.bemdeclTest, {
+                target: 'client.bemdecl.js',
+                levelsTarget: '?.test.levels'
+            }],
+            [techs.jsTests],
+            [techs.depsWithModules],
+            [techs.mergeKeysets, {lang: 'all'}],
+            [techs.mergeKeysets, {lang: 'ru'}],
+            [techs.yi18n, {lang: 'all'}],
+            [techs.yi18n, {lang: '{lang}'}],
+            [techs.browserJs, {target: '?.source.js'}],
+            [techs.bhBundle, {
+                bhOptions: bhOptions,
+                requires: {i18n: {ym: 'y-i18n'}},
                 target: '?.client.bh.js'
             }],
-            [require('enb-priv-js/techs/pub-js-i18n'), {
+            [techs.pubJsI18n, {
                 target: '?.pre.js',
                 jsTarget: '?.source.js',
                 bemhtmlTarget: '?.client.bh.js',
                 lang: config.getLanguages()[0]
             }],
-            [require('enb-modules/techs/prepend-modules'), {source: '?.pre.js', target: '?.js'}],
-            [require('enb/techs/file-provider'), {target: 'test.html'}],
-            [require('enb/techs/file-provider'), {target: 'mocha.js'}],
-            [require('enb/techs/file-provider'), {target: 'mocha.css'}],
-            [require('enb/techs/file-provider'), {target: 'chai.js'}],
-            [require('enb/techs/file-provider'), {target: 'sinon.js'}]
+            [techs.prependModules, {source: '?.pre.js', target: '?.js'}],
+            [techs.fileProvider, {target: 'test.html'}],
+            [techs.fileProvider, {target: 'mocha.js'}],
+            [techs.fileProvider, {target: 'mocha.css'}],
+            [techs.fileProvider, {target: 'chai.js'}],
+            [techs.fileProvider, {target: 'sinon.js'}]
         ]);
 
         nodeConfig.addTargets([

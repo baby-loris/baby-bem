@@ -42,7 +42,7 @@ function getCommonData(pagePath, i18n) {
     var pageName = path.basename(pagePath);
 
     return {
-        assetsPath: hosts.static + pagePath + '/_' + pageName,
+        assetsPath: hosts.static + pagePath + '/' + pageName,
         i18n: {
             lang: i18n.getLanguage()
         }

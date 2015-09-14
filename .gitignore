@@ -1,5 +1,6 @@
 .enb/tmp
 node_modules/
+libs/
 npm-debug.log
 pages/*/*.*
 !pages/*/*.bemdecl.js

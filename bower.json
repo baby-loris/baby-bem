@@ -1,0 +1,14 @@
+{
+  "name": "{{ProjectName}}",
+  "ignore": [
+    "node_modules",
+    "libs"
+  ],
+  "dependencies": {
+    "bem-core": "2.8.0",
+    "bem-components": "2.3.0"
+  },
+  "resolutions": {
+    "bem-core": "2.8.0"
+  }
+}

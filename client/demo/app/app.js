@@ -1,26 +1,30 @@
-modules.define('app', ['inherit', 'jquery', 'bh', 'i-bem__dom'], function (provide, inherit, $, bh, BEMDOM) {
-    var App = inherit({
-        __constructor: function (domNode) {
-            this._domNode = $(domNode);
-        },
+modules.define('app', ['i-bem__dom', 'bh'], function (provide, BEMDOM, bh) {
 
-        start: function () {
-            this._removeSpinner();
-            this._showSplashScreen();
-        },
+    provide(BEMDOM.decl(this.name, {
+        onSetMod: {
+            js: {
+                inited: function () {
+                    this
+                        ._removeSpinner()
+                        ._showSplashScreen();
 
+                    console.log(this.params.data);
+                }
+            }
+        },
         _removeSpinner: function () {
-            var spinDomNode = this._domNode.find('.spin');
+            var spinDomNode = this.findBlockInside('spin').domElem;
             BEMDOM.destruct(spinDomNode);
-            this._domNode.bem('app').delMod('loading');
+
+            return this.delMod('loading');
         },
 
         _showSplashScreen: function () {
-            var splashDomNode = $(bh.apply({block: 'splash'}));
-            this._domNode.append(splashDomNode);
-            BEMDOM.init(splashDomNode);
-        }
-    });
+            var splashHtml = bh.apply({block: 'splash'});
+            BEMDOM.append(this.domElem, splashHtml);
 
-    provide(App);
+            return this;
+        }
+    }));
+
 });
