@@ -1,6 +1,7 @@
 module.exports = function (data) {
     return {
         block: 'page',
+        mods: {theme: 'islands'},
         styles: [
             {elem: 'css', url: data.assetsPath + '.css'}
         ],

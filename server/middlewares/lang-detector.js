@@ -1,4 +1,4 @@
-var SUPPORTED_LANGS = ['ru', 'en'];
+var SUPPORTED_LANGS = ['en', 'ru'];
 
 /**
  * Simple middleware to detect interface language.

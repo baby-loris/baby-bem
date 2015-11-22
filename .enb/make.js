@@ -3,15 +3,22 @@ module.exports = function (config) {
 
     function getLevels() {
         return [
-            'node_modules/bem-core/common.blocks',
-            'node_modules/bem-core/desktop.blocks',
-            'node_modules/bem-components/common.blocks',
-            'node_modules/bem-components/desktop.blocks',
-            'node_modules/bem-components/design/common.blocks',
-            'node_modules/bem-components/design/desktop.blocks',
+            {path: 'node_modules/bem-core/common.blocks', check: false},
+            {path: 'node_modules/bem-core/desktop.blocks', check: false},
+            {path: 'node_modules/bem-components/common.blocks', check: false},
+            {path: 'node_modules/bem-components/desktop.blocks', check: false},
+            {path: 'node_modules/bem-components/design/common.blocks', check: false},
+            {path: 'node_modules/bem-components/design/desktop.blocks', check: false},
             'client/common',
             'client/demo'
-        ].map(config.resolvePath.bind(config));
+        ];
+    }
+
+    function getTestLevels() {
+        return [
+            'client/common',
+            'client/demo'
+        ];
     }
 
     config.nodes('pages/*');
@@ -21,20 +28,30 @@ module.exports = function (config) {
             [require('enb/techs/file-provider'), {target: '?.bemdecl.js'}],
             [require('enb-bem-techs/techs/levels'), {levels: getLevels()}],
             [require('enb-modules/techs/deps-with-modules')],
-            [require('enb-stylus/techs/css-stylus-with-autoprefixer'), {
-                autoprefixerArguments: [
-                    'IE >= 9',
-                    'Safari >= 5',
-                    'Chrome >= 33',
-                    'Opera >= 12.16',
-                    'Firefox >= 28'
-                ]
+            [require('enb-stylus/techs/stylus'), {
+                autoprefixer: {
+                    browsers: [
+                        'IE >= 9',
+                        'Safari >= 5',
+                        'Chrome >= 33',
+                        'Opera >= 12.16',
+                        'Firefox >= 28'
+                    ]
+                }
             }],
-            [require('enb-diverse-js/techs/browser-js'), {target: '?.pre.js'}],
-            [require('enb-bh/techs/bh-server'), {jsAttrName: 'data-bem', jsAttrScheme: 'json'}],
-            [require('enb-bh/techs/bh-client-module'), {
-                jsAttrName: 'data-bem',
-                jsAttrScheme: 'json',
+            [require('enb-js/techs/browser-js'), {target: '?.pre.js'}],
+            [require('enb-bh/techs/bh-commonjs'), {
+                bhOptions: {
+                    jsAttrName: 'data-bem',
+                    jsAttrScheme: 'json'
+                }
+            }],
+            [require('enb-bh/techs/bh-bundle'), {
+                bhOptions: {
+                    jsAttrName: 'data-bem',
+                    jsAttrScheme: 'json',
+                },
+                requires: {i18n: {ym: 'y-i18n'}},
                 target: '?.client.bh.js'
             }],
             [require('enb-priv-js/techs/pub-js-i18n'), {
@@ -70,17 +87,27 @@ module.exports = function (config) {
         nodeConfig.addTechs([
             [require('enb-bem-techs/techs/files')],
             [require('enb-bem-techs/techs/levels'), {levels: getLevels()}],
-            [require('enb/techs/bemdecl-test'), {target: 'client.bemdecl.js'}],
+            [require('enb-bem-techs/techs/levels'), {
+                levels: getTestLevels(),
+                target: '?.test.levels'
+            }],
+            [require('enb/techs/bemdecl-test'), {
+                target: 'client.bemdecl.js',
+                levelsTarget: '?.test.levels'
+            }],
             [require('enb/techs/js-test')],
             [require('enb-modules/techs/deps-with-modules')],
             [require('enb/techs/i18n-merge-keysets'), {lang: 'all'}],
             [require('enb/techs/i18n-merge-keysets'), {lang: 'ru'}],
             [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: 'all'}],
             [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: '{lang}'}],
-            [require('enb-diverse-js/techs/browser-js'), {target: '?.source.js'}],
-            [require('enb-bh/techs/bh-client-module'), {
-                jsAttrName: 'data-bem',
-                jsAttrScheme: 'json',
+            [require('enb-js/techs/browser-js'), {target: '?.source.js'}],
+            [require('enb-bh/techs/bh-bundle'), {
+                bhOptions: {
+                    jsAttrName: 'data-bem',
+                    jsAttrScheme: 'json',
+                },
+                requires: {i18n: {ym: 'y-i18n'}},
                 target: '?.client.bh.js'
             }],
             [require('enb-priv-js/techs/pub-js-i18n'), {
