@@ -66,7 +66,7 @@ module.exports = function (config) {
             [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: 'all'}],
             [require('enb-y-i18n/techs/y-i18n-lang-js'), {lang: '{lang}'}]
         ]);
-        nodeConfig.addTargets(['_?.{lang}.js', '_?.css']);
+        nodeConfig.addTargets(['_?.{lang}.js', '_?.css', '?.bh.js']);
 
         nodeConfig.mode('development', function (nodeConfig) {
             nodeConfig.addTechs([
