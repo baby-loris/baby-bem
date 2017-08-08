@@ -40,7 +40,7 @@ http://localhost:8080/
   * [jshint](https://github.com/jshint/jshint) — a tool to detect errors and potential problems in JavaScript code
   * [jscs](https://github.com/mdevils/node-jscs) — a code style checker for javascript
   * [git-hooks](https://github.com/icefox/git-hooks) — a tool for git hooks managment
-  * [mocha](http://visionmedia.github.io/mocha/) + [chai](http://chaijs.com/) + [sinon](http://sinonjs.org/) + [phantomjs](http://phantomjs.org/) — testing client javascript
+  * [mocha](http://mochajs.org/) + [chai](http://chaijs.com/) + [sinon](http://sinonjs.org/) + [phantomjs](http://phantomjs.org/) — testing client javascript
 
 ## How it works
 
